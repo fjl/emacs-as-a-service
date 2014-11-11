@@ -44,7 +44,16 @@ along with emacs-as-a-service.  If not, see <http://www.gnu.org/licenses/>.
 - (void) applicationDidFinishLaunching:(NSNotification *)notification
 {
 	// regular launch, show emacs and quit
-	shellfork("emacsclient -nc");
+	BOOL start = YES;
+	NSRunningApplication *app;
+	NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"org.gnu.Emacs"];
+	if ([instances count] > 0) {
+		app = [instances objectAtIndex:0];
+		start = ![app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
+	}
+	if (start) {
+		shellfork("emacsclient -nc");
+	}
 	[(NSApplication*)notification.object stop: self];
 }
 
