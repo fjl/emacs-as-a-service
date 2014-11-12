@@ -44,17 +44,16 @@ along with emacs-as-a-service.  If not, see <http://www.gnu.org/licenses/>.
 - (void) applicationDidFinishLaunching:(NSNotification *)notification
 {
 	// regular launch, show emacs and quit
-	BOOL start = YES;
-	NSRunningApplication *app;
-	NSArray *instances = [NSRunningApplication runningApplicationsWithBundleIdentifier:@"org.gnu.Emacs"];
-	if ([instances count] > 0) {
-		app = [instances objectAtIndex:0];
-		start = ![app activateWithOptions:NSApplicationActivateIgnoringOtherApps];
-	}
-	if (start) {
-		shellfork("emacsclient -nc");
-	}
-	[(NSApplication*)notification.object stop: self];
+	shellfork("emacsclient -e \"                                     \
+		(let (found)                                             \
+		  (dolist (frame (frame-list))                           \
+		    (when (member (framep-on-display frame) '(ns mac))   \
+		      (setq found frame)))                               \
+		  (unless found                                          \
+		    (setq found (new-frame '((window-system . ns)))))    \
+		  (select-frame-set-input-focus found))                  \
+	\"");
+	exit(0);
 }
 
 @end
