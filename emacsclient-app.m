@@ -21,12 +21,7 @@ along with emacs-as-a-service.  If not, see <http://www.gnu.org/licenses/>.
 #include "common.h"
 #include <Cocoa/Cocoa.h>
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
-
-- (BOOL) application:(NSApplication *)app openFile:(NSString *)filename;
-- (void) applicationDidFinishLaunching:(NSNotification *)notification;
-
-@end
+@interface AppDelegate : NSObject <NSApplicationDelegate> @end
 
 @implementation AppDelegate
 
@@ -62,16 +57,6 @@ int main()
 {
 	[NSAutoreleasePool new];
 	[NSApplication sharedApplication];
-	[NSApp setActivationPolicy:NSApplicationActivationPolicyRegular];
-	id menubar = [[NSMenu new] autorelease];
-	id appMenuItem = [[NSMenuItem new] autorelease];
-	[menubar addItem:appMenuItem];
-	[NSApp setMainMenu:menubar];
-	id appMenu = [[NSMenu new] autorelease];
-	id quitMenuItem = [[[NSMenuItem alloc] initWithTitle:@"Quit"action:@selector(terminate:) keyEquivalent:@"q"] autorelease];
-	[appMenu addItem:quitMenuItem];
-	[appMenuItem setSubmenu:appMenu];
 	[NSApp setDelegate: (id)[AppDelegate alloc]];
-	[NSApp activateIgnoringOtherApps:YES];
 	[NSApp run];
 }

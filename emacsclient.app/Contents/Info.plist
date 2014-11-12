@@ -497,6 +497,8 @@ along with emacs-as-a-service.  If not, see <http://www.gnu.org/licenses/>.
 	<string>EMAx</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
+    <key>LSUIElement</key>
+    <true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
