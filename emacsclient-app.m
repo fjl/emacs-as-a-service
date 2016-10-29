@@ -29,10 +29,10 @@ along with emacs-as-a-service.  If not, see <http://www.gnu.org/licenses/>.
 {
 	// launch with file, open the file and quit
 	char *cmd;
-	asprintf(&cmd, "emacsclient -nc %s", [filename UTF8String]);
+	asprintf(&cmd, "emacsclient -n %s", [filename UTF8String]);
 	shellfork(cmd);
 	free(cmd);
-	[app stop: self];
+	exit(0);
 	return true;
 }
 
