@@ -1,5 +1,5 @@
-LDFLAGS = -lc
-EMACSCLIENT_APP = emacsclient.app/Contents/MacOS/emacsclient-app
+EMACSCLIENT_DIR = emacsclient.app/Contents/MacOS
+EMACSCLIENT_APP = $(EMACSCLIENT_DIR)/emacsclient-app
 
 .PHONY: all install clean
 
@@ -20,10 +20,11 @@ clean:
 	rm -f *.o ptylaunch $(EMACSCLIENT_APP)
 
 ptylaunch: ptylaunch.o common.o
-	$(CC) $(LDFLAGS) -o $@ $^
+	$(CC)    -o $@ $^
 
 $(EMACSCLIENT_APP): emacsclient-app.o common.o
-	$(CC) $(LDFLAGS) -framework Cocoa -o $@ $^
+	mkdir -p $(EMACSCLIENT_DIR)
+	$(CC)    -framework Cocoa -o $@ $^
 
 ptylaunch.o: common.h
 common.o: common.h
